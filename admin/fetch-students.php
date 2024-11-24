@@ -13,13 +13,6 @@ if (!$studentsResult) {
     die("Error fetching students: " . mysqli_error($con));
 }
 
-// Fetch subjects
-$subjectsQuery = "SELECT subject_id, name AS name FROM subjects";
-$subjectsResult = mysqli_query($con, $subjectsQuery);
-if (!$subjectsResult) {
-    die("Error fetching subjects: " . mysqli_error($con));
-}
-
 // Output students table rows
 if ($studentsResult) {
     while ($row = mysqli_fetch_assoc($studentsResult)) {
@@ -37,18 +30,7 @@ if ($studentsResult) {
     }
 }
 
-// Output subjects table rows
-if ($subjectsResult) {
-    while ($row = mysqli_fetch_assoc($subjectsResult)) {
-        echo '<tr>
-                <td>' . $row['subject_id'] . '</td>
-                <td><a href="subject-details.php?subject_id=' . $row['subject_id'] . '">' . $row['name'] . '</a></td>
-                <td>
-                    <a href="subject-details.php?subject_id=' . $row['subject_id'] . '" class="btn btn-sm btn-info">View Students</a>
-                </td>
-              </tr>';
-    }
-}
+
 
 mysqli_close($con);
 ?>
