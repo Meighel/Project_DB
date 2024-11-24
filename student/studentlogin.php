@@ -1,32 +1,30 @@
 <?php
-include 'webconnect.php';
+include '../includes/webconnect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve user input
-    $email = $_POST['email'];
+    $student_id = $_POST['studentNumber'];
     $password = $_POST['password'];
 
-    // SQL query to check for the user
-    $sql = "SELECT * FROM admins WHERE email = '$email' AND password = '$password'";
+    // SQL query to fetch hashed password
+    $sql = "SELECT password FROM students WHERE student_id = '$student_id'";
     $result = mysqli_query($con, $sql);
 
-    if (mysqli_num_rows($result) > 0) {
-        // User exists
-        session_start();
+    if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['admin_id'] = $row['admin_id'];
-        $_SESSION['firstname'] = $row['first_name'];
-        $_SESSION['lastname'] = $row['last_name'];
+        $hashed_password = $row['password'];
 
-        echo "Login successful! Redirecting...";
-        header("Location: ../index.html");
-        exit();
+        // Verify the password
+        if (password_verify($password, $hashed_password)) {
+            echo "Login successful!";
+            header("Location: ../dashboard-student.html");
+            exit();
+        } else {
+            echo "Invalid password. Please try again.";
+        }
     } else {
-        // User not found
-        echo "Invalid email or password. Please try again.";
+        echo "Student not found.";
     }
 
-    // Close the connection
     mysqli_close($con);
 }
 ?>

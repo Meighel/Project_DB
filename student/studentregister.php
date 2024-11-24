@@ -1,31 +1,33 @@
 <?php
-include 'webconnect.php';
+include '../includes/webconnect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $student_id = $_POST['StudentNumber'];
-    $firstname = $_POST['FirstName'];
-    $lastname = $_POST['LastName'];
-    $corp_email = $_POST['CorpEmail'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $student_id = $_POST['studentNumber'];
+    $firstname = $_POST['firstName'];
+    $lastname = $_POST['lastName'];
+    $phone = $_POST['phone'];
+    $corp_email = $_POST['corpEmail'];
+    $password = $_POST['password'] ?? ''; // Optional password field
 
-    if ($password !== $confirm_password) {
-        echo "Passwords do not match. Please try again.";
+    // Use last name as the default password if none is provided
+    $final_password = empty($password) ? $lastname : $password;
+
+    // Hash the password
+    $hashed_password = password_hash($final_password, PASSWORD_DEFAULT);
+
+    // SQL query
+    $sql = "INSERT INTO students (student_id, student_firstname, student_lastname, student_mobile, student_email, password)
+            VALUES ('$student_id', '$firstname', '$lastname', '$phone', '$corp_email', '$hashed_password')";
+
+    // Execute query
+    if (mysqli_query($con, $sql)) {
+        header("Location: ../dashboard-admin.html");
+        exit();
     } else {
-        // SQL query
-        $sql = "INSERT INTO students (student_id, first_name, last_name, corp_email, password)
-                VALUES ('$student_id', '$firstname', '$lastname', '$corp_email', '$password')";
-
-        // Execute query
-        if (mysqli_query($con, $sql)) {
-            header("Location: ../login-student.html");
-            exit();
-        } else {
-            echo "Error: " . mysqli_error($con);
-        }
-
-        // Close the connection
-        mysqli_close($con);
+        echo "Error: " . mysqli_error($con);
     }
+
+    // Close the connection
+    mysqli_close($con);
 }
 ?>
