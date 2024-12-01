@@ -23,14 +23,17 @@ if ($studentsResult) {
                 <td>' . $row['student_mobile'] . '</td>
                 <td>' . htmlspecialchars($row['subjects']) . '</td>
                 <td>
-                    <a href="edit-student.php?student_id=' . $row['student_id'] . '" class="btn btn-sm btn-warning">Edit</a>
+                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editStudentModal"
+                            data-id="' . $row['student_id'] . '"
+                            data-firstname="' . $row['student_firstname'] . '"
+                            data-lastname="' . $row['student_lastname'] . '"
+                            data-email="' . $row['student_email'] . '"
+                            data-mobile="' . $row['student_mobile'] . '">Edit</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteStudent(\'' . $row['student_id'] . '\')">Delete</button>
                 </td>
               </tr>';
     }
 }
-
-
 
 mysqli_close($con);
 ?>

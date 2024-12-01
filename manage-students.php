@@ -23,7 +23,7 @@
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="padding: 2%;">
+                <div class="container-fluid" style="padding: 2%;"> 
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -31,6 +31,7 @@
                         <div>
                             <a href="register-student.html" class="btn btn-primary btn-sm">Add Student</a>
                             <a href="register-subjects.php" class="btn btn-secondary btn-sm">Register Subjects</a>
+                            <a href="register-grade.php" class="btn btn-primary btn-sm">Register Grade</a>
                         </div>
                     </div>
 
@@ -63,7 +64,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    include 'admin/fetch-students.php'; // Include dynamic student rows ?>
+                                    include 'admin/fetch-students.php'; // Include dynamic student rows
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -126,6 +128,62 @@
                 window.location.href = `delete-student.php?student_id=${studentId}`;
             }
         }
+    </script>
+
+    <!-- Edit Student Modal -->
+    <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="admin/edit-student-process.php" method="POST">
+                        <input type="hidden" id="edit_student_id" name="student_id">
+                        <div class="form-group">
+                            <label for="edit_firstname">First Name</label>
+                            <input type="text" id="edit_firstname" name="student_firstname" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_lastname">Last Name</label>
+                            <input type="text" id="edit_lastname" name="student_lastname" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_email">Email</label>
+                            <input type="email" id="edit_email" name="student_email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_mobile">Mobile</label>
+                            <input type="text" id="edit_mobile" name="student_mobile" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Populate the edit modal with the selected student's data
+        $('#editStudentModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var studentId = button.data('id');
+            var firstname = button.data('firstname');
+            var lastname = button.data('lastname');
+            var email = button.data('email');
+            var mobile = button.data('mobile');
+
+            // Set values in the modal
+            var modal = $(this);
+            modal.find('#edit_student_id').val(studentId);
+            modal.find('#edit_firstname').val(firstname);
+            modal.find('#edit_lastname').val(lastname);
+            modal.find('#edit_email').val(email);
+            modal.find('#edit_mobile').val(mobile);
+        });
     </script>
 
 </body>

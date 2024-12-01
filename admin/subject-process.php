@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../includes/webconnect.php';// Include your database connection
+include __DIR__ . '/../includes/webconnect.php'; // Include your database connection
 
 // Handle Add Subject
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
@@ -70,7 +70,7 @@ while ($row = mysqli_fetch_assoc($subjectsResult)) {
     echo "
     <tr>
         <td>{$row['subject_id']}</td>
-        <td>{$row['name']}</td>
+        <td><a href='students-in-subject.php?subject_id={$row['subject_id']}'>{$row['name']}</a></td>
         <td>{$row['description']}</td>
         <td>
             <button class='btn btn-sm btn-warning' data-toggle='modal' data-target='#editSubjectModal'
