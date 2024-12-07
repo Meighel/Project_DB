@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // SQL query to fetch hashed password
-    $sql = "SELECT password FROM students WHERE student_id = '$student_id'";
+    $sql = "SELECT student_id, password FROM students WHERE student_id = '$student_id'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Verify the password
         if (password_verify($password, $hashed_password)) {
-            echo "Login successful!";
-            header("Location: ../dashboard-student.html");
+            // Start a session and store student ID
+            session_start();
+            $_SESSION['student_id'] = $row['student_id'];
+
+            // Redirect to personal student dashboard 
+            header("Location: ../dashboard-student.php");
             exit();
         } else {
             echo "Invalid password. Please try again.";

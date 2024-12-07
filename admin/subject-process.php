@@ -70,7 +70,7 @@ while ($row = mysqli_fetch_assoc($subjectsResult)) {
     echo "
     <tr>
         <td>{$row['subject_id']}</td>
-        <td><a href='students-in-subject.php?subject_id={$row['subject_id']}'>{$row['name']}</a></td>
+        <td><a href='students-per-subject.php?subject_id={$row['subject_id']}'>{$row['name']}</a></td>
         <td>{$row['description']}</td>
         <td>
             <button class='btn btn-sm btn-warning' data-toggle='modal' data-target='#editSubjectModal'

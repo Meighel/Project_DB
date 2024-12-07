@@ -86,7 +86,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php include 'admin/fetch-subjects.php'; // Include dynamic subject rows ?>
+                                    <?php 
+                                    include 'admin/fetch-subjects.php'; // Include dynamic subject rows 
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
