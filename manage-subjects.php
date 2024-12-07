@@ -68,7 +68,8 @@
                             </table>
                         </div>
                     </div>
-
+                    
+                    <a href="dashboard-admin.html" class="btn btn-primary">Back to Dashboard</a>
                 </div>
                 <!-- /.container-fluid -->
 

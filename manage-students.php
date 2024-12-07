@@ -93,9 +93,9 @@
                         </div>
                     </div>
 
+                    <a href="dashboard-admin.html" class="btn btn-primary">Back to Dashboard</a>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 

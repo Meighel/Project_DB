@@ -18,7 +18,7 @@ if ($studentsResult) {
     while ($row = mysqli_fetch_assoc($studentsResult)) {
         echo '<tr>
                 <td>' . $row['student_id'] . '</td>
-                <td><a href="student-details.php?student_id=' . $row['student_id'] . '">' . $row['student_firstname'] . ' ' . $row['student_lastname'] . '</a></td>
+                <td><a href="/Project_DB/admin/student-details.php?student_id=' . $row['student_id'] . '">' . $row['student_firstname'] . ' ' . $row['student_lastname'] . '</a></td>
                 <td>' . $row['student_email'] . '</td>
                 <td>' . $row['student_mobile'] . '</td>
                 <td>' . htmlspecialchars($row['subjects']) . '</td>
