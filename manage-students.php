@@ -30,8 +30,7 @@
                         <h1 class="h3 mb-4 text-gray-800">Manage Students</h1>
                         <div>
                             <a href="register-student.html" class="btn btn-primary btn-sm">Add Student</a>
-                            <a href="register-subjects.php" class="btn btn-secondary btn-sm">Register Subjects</a>
-                            <a href="register-grade.php" class="btn btn-primary btn-sm">Register Grade</a>
+                            <a href="register-grade.php" class="btn btn-secondary btn-sm">Register Grade</a>
                         </div>
                     </div>
 
