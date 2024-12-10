@@ -43,6 +43,46 @@
                     </div>
                 </div>
 
+                <!-- Edit Student Modal -->
+                <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form action="admin/edit-student-process.php" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="edit_student_id" name="student_id">
+                                    <div class="form-group">
+                                        <label for="edit_firstname">First Name</label>
+                                        <input type="text" class="form-control" id="edit_firstname" name="student_firstname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_lastname">Last Name</label>
+                                        <input type="text" class="form-control" id="edit_lastname" name="student_lastname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_email">Email</label>
+                                        <input type="email" class="form-control" id="edit_email" name="student_email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_mobile">Mobile</label>
+                                        <input type="text" class="form-control" id="edit_mobile" name="student_mobile" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
                 <!-- Grades Table -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -188,6 +228,13 @@
             }
         }
 
+        // Handle student deletion with redirection
+        function deleteStudent(studentId) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                window.location.href = `admin/delete-student-alone.php?student_id=${studentId}`;
+            }
+        }
+
         // Populate Edit Subject Modal
         $('#editSubjectModal').on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
@@ -200,6 +247,24 @@
             modal.find('#edit_subject_name').val(name);
             modal.find('#edit_subject_description').val(description);
         });
+
+        // Populate Edit Student Modal
+        $('#editStudentModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var studentId = button.data('id');
+            var firstname = button.data('firstname');
+            var lastname = button.data('lastname');
+            var email = button.data('email');
+            var mobile = button.data('mobile');
+
+            var modal = $(this);
+            modal.find('#edit_student_id').val(studentId);
+            modal.find('#edit_firstname').val(firstname);
+            modal.find('#edit_lastname').val(lastname);
+            modal.find('#edit_email').val(email);
+            modal.find('#edit_mobile').val(mobile);
+        });
+
 
         // Apply filtering for the Students table
         document.getElementById('student-search').addEventListener('input', function () {

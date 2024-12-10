@@ -159,7 +159,7 @@
         // Delete confirmation for students
         function deleteStudent(studentId) {
             if (confirm("Are you sure you want to delete this student?")) {
-                window.location.href = `delete-student.php?student_id=${studentId}`;
+                window.location.href = `delete-student-alone.php?student_id=${studentId}`;
             }
         }
     </script>

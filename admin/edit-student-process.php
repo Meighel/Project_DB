@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             // Redirect back to manage-students.php with a success message
-            header("Location: ../manage-students.php?success=edit");
+            header("Location: ../manage-records.php?success=edit");
             exit();
         } else {
             echo "Error updating record: " . $stmt->error;
