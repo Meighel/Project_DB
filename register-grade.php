@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("sid", $student_id, $subject_id, $grade); // 'd' for decimal grade
 
             if ($stmt->execute()) {
-                // Redirect to manage-students.php after successful addition
-                header("Location: manage-students.php");
+                header("Location: manage-records.php");
                 exit();
             } else {
                 echo "<p style='color: red;'>Error: Could not register grade.</p>";
