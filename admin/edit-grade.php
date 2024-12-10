@@ -4,7 +4,7 @@ include __DIR__ . '/../includes/webconnect.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $grades_id = $_POST['grades_id'];
     $grade = $_POST['grade'];
-    $subject_id = $_POST['subject_id']; // Add subject_id if it comes from the form
+    $subject_id = $_POST['subject_id'];
 
     // Check if the grade and grades_id are not empty
     if (!empty($grades_id) && !empty($grade)) {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($subject_id)) {
                 header("Location: ../students-per-subject.php?subject_id=" . $subject_id . "&success=edit");
             } else {
-                header("Location: ../manage-students.php?success=edit");
+                header("Location: ../manage-records.php?success=edit");
             }
             exit();
         } else {

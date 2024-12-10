@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../includes/webconnect.php'; // Include your database connection
+include __DIR__ . '/../includes/webconnect.php'; 
 
 // Handle Add Subject
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_subject'])) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_subject'])) {
         $stmt->bind_param("ssi", $subject_name, $subject_description, $subject_id);
 
         if ($stmt->execute()) {
-            header("Location: ../manage-subjects.php?success=edit");
+            header("Location: ../manage-records.php?success=edit");
         } else {
             header("Location: ../manage-subjects.php?error=edit");
         }
@@ -52,7 +52,7 @@ if (isset($_GET['delete_subject'])) {
         $stmt->bind_param("i", $subject_id);
 
         if ($stmt->execute()) {
-            header("Location: ../manage-subjects.php?success=delete");
+            header("Location: ../manage-records.php?success=delete");
         } else {
             header("Location: ../manage-subjects.php?error=delete");
         }

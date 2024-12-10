@@ -1,10 +1,10 @@
 <?php
 include __DIR__ . '/../includes/webconnect.php'; // Include database connection
 
-// Check if grades_id and subject_id are provided in the URL
-if (isset($_GET['grades_id'], $_GET['subject_id'])) {
+// Check if grades_id is provided in the URL
+if (isset($_GET['grades_id'])) {
     $grades_id = $_GET['grades_id']; // The ID of the grade record to delete
-    $subject_id = $_GET['subject_id']; // The subject ID for redirection
+    $subject_id = isset($_GET['subject_id']) ? $_GET['subject_id'] : null; // Optionally get the subject_id from the URL
 
     // Prepare the query to delete the grade record by grades_id
     $query = "DELETE FROM grades WHERE grades_id = ?";
@@ -13,8 +13,13 @@ if (isset($_GET['grades_id'], $_GET['subject_id'])) {
 
     // Execute the delete query
     if ($stmt->execute()) {
-        // Redirect to students-per-subject.php with success message and subject_id
-        header("Location: ../students-per-subject.php?subject_id=" . $subject_id . "&success=delete");
+        // If subject_id is provided in the URL, redirect to students-per-subject.php
+        if ($subject_id) {
+            header("Location: ../students-per-subject.php?subject_id=" . $subject_id . "&success=delete");
+        } else {
+            // Otherwise, redirect to manage-records.php
+            header("Location: ../manage-records.php?success=delete");
+        }
         exit();
     } else {
         // Output an error message if the delete fails
@@ -23,10 +28,11 @@ if (isset($_GET['grades_id'], $_GET['subject_id'])) {
 
     $stmt->close();
 } else {
-    // If grades_id or subject_id is not provided, show an error
-    echo "Missing required grades_id or subject_id.";
+    // If grades_id is not provided, show an error
+    echo "Missing required grades_id.";
 }
 
 // Close the database connection
 mysqli_close($con);
 ?>
+
