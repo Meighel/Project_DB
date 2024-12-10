@@ -48,7 +48,7 @@ $stmt->close();
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-user-graduate"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Student Dashboard</div>
+                <div class="sidebar-brand-text mx-3" style="font-family: 'Arial', sans-serif;">Student Dashboard</div>
             </a>
         </ul>
 
@@ -116,6 +116,7 @@ $stmt->close();
             </div>
         </div>
     </div>
+
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
