@@ -44,6 +44,16 @@ $stmt->close();
         <h1 class="mt-4">Students Enrolled in <?php echo htmlspecialchars($subjectResult['name']); ?></h1>
         <p><strong>Description:</strong> <?php echo htmlspecialchars($subjectResult['description']); ?></p>
 
+        <!-- Search and Filter -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form class="form-inline">
+                    <input type="text" id="student-search" class="form-control form-control-sm col-sm-4" placeholder="Search by student ID or name">
+                </form>
+            </div>
+        </div>
+
+        <!-- Students Table -->
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -53,7 +63,7 @@ $stmt->close();
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="students-table-body">
                 <?php while ($row = $studentsResult->fetch_assoc()) { ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['student_id']); ?></td>
@@ -68,8 +78,8 @@ $stmt->close();
                                 data-grade="<?php echo htmlspecialchars($row['grade']); ?>">Edit
                             </button>
                             <a href="admin/delete-grade.php?grades_id=<?php echo $row['grades_id']; ?>&subject_id=<?php echo $subject_id; ?>" 
-                                class="btn btn-sm btn-danger"
-                                onclick="return confirm('Are you sure you want to delete this record?');">
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this record?');">
                                 Delete
                             </a>
                         </td>
@@ -109,6 +119,25 @@ $stmt->close();
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Filter Students Table by student ID or name
+        document.getElementById('student-search').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#students-table-body tr');
+            rows.forEach(row => {
+                const studentIdCell = row.querySelector('td:nth-child(1)');
+                const studentNameCell = row.querySelector('td:nth-child(2)');
+                const studentId = studentIdCell ? studentIdCell.innerText.toLowerCase() : '';
+                const studentName = studentNameCell ? studentNameCell.innerText.toLowerCase() : '';
+
+                if (studentId.includes(searchValue) || studentName.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Populate the edit modal with grade data
         $('#editGradeModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var gradesId = button.data('grades-id');

@@ -23,7 +23,7 @@
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="padding: 2%;">
+                <div class="container-fluid" style="padding: 2%;"> 
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -43,6 +43,16 @@
                                     <textarea id="subject_description" name="subject_description" class="form-control" rows="3" required></textarea>
                                 </div>
                                 <button type="submit" name="add_subject" class="btn btn-primary btn-block">Add Subject</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Search and Filters for Subjects -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form class="form-inline">
+                                <input type="text" id="subject-search" class="form-control form-control-sm col-sm-4" placeholder="Search by subject name">
+                                <button type="button" id="filter-btn" class="btn btn-primary btn-sm">Filter</button>
                             </form>
                         </div>
                     </div>
@@ -117,9 +127,20 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
+        // Client-side filtering for subjects table
+        document.getElementById('subject-search').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#subjectsTable tbody tr');
+            rows.forEach(row => {
+                const subjectNameCell = row.querySelector('td:nth-child(2)'); // Subject Name column
+                const subjectName = subjectNameCell ? subjectNameCell.innerText.toLowerCase() : '';
+                row.style.display = subjectName.includes(searchValue) ? '' : 'none';
+            });
+        });
+
         // Populate edit modal with subject data
         $('#editSubjectModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
+            var button = $(event.relatedTarget); // Button that triggered the modal
             var subjectId = button.data('id');
             var subjectName = button.data('name');
             var subjectDescription = button.data('description');

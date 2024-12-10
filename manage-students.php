@@ -34,11 +34,11 @@
                         </div>
                     </div>
 
-                    <!-- Search and Filters -->
+                    <!-- Search and Filters for Students -->
                     <div class="card mb-4">
                         <div class="card-body">
                             <form class="form-inline">
-                                <input type="text" id="search" class="form-control form-control-sm col-sm-4" placeholder="Search by name, subject, or grade">
+                                <input type="text" id="student-search" class="form-control form-control-sm col-sm-4" placeholder="Search by ID, name, mobile, or email">
                                 <button type="button" id="filter-btn" class="btn btn-primary btn-sm">Filter</button>
                             </form>
                         </div>
@@ -70,6 +70,16 @@
                         </div>
                     </div>
 
+                    <!-- Search and Filters for Subjects -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form class="form-inline">
+                                <input type="text" id="subject-search" class="form-control form-control-sm col-sm-4" placeholder="Search by subject name">
+                                <button type="button" id="subject-filter-btn" class="btn btn-primary btn-sm">Filter</button>
+                            </form>
+                        </div>
+                    </div>
+
                     <!-- List of Subjects -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -86,7 +96,7 @@
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    include 'admin/fetch-subjects.php'; // Include dynamic subject rows 
+                                    include 'admin/fetch-subjects.php'; // Include dynamic subject rows
                                     ?>
                                 </tbody>
                             </table>
@@ -112,10 +122,33 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-        // Search and filter functionality
-        document.getElementById('filter-btn').addEventListener('click', function () {
-            const searchValue = document.getElementById('search').value.toLowerCase();
+        // Client-side filtering for students table
+        document.getElementById('student-search').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
             const rows = document.querySelectorAll('#studentsTable tbody tr');
+            rows.forEach(row => {
+                const studentIdCell = row.querySelector('td:nth-child(1)');
+                const studentNameCell = row.querySelector('td:nth-child(2)');
+                const studentEmailCell = row.querySelector('td:nth-child(3)');
+                const studentMobileCell = row.querySelector('td:nth-child(4)');
+
+                const studentId = studentIdCell ? studentIdCell.innerText.toLowerCase() : '';
+                const studentName = studentNameCell ? studentNameCell.innerText.toLowerCase() : '';
+                const studentEmail = studentEmailCell ? studentEmailCell.innerText.toLowerCase() : '';
+                const studentMobile = studentMobileCell ? studentMobileCell.innerText.toLowerCase() : '';
+
+                if (studentId.includes(searchValue) || studentName.includes(searchValue) || studentEmail.includes(searchValue) || studentMobile.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Client-side filtering for subjects table
+        document.getElementById('subject-search').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#subjectsTable tbody tr');
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
                 const match = [...cells].some(cell => cell.innerText.toLowerCase().includes(searchValue));
@@ -123,7 +156,7 @@
             });
         });
 
-        // Delete confirmation
+        // Delete confirmation for students
         function deleteStudent(studentId) {
             if (confirm("Are you sure you want to delete this student?")) {
                 window.location.href = `delete-student.php?student_id=${studentId}`;
