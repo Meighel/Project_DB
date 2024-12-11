@@ -7,18 +7,18 @@ if (!isset($_SESSION['student_id'])) {
     exit();
 }
 
-include __DIR__ . '../includes/webconnect.php';
+include __DIR__ . '/includes/webconnect.php';
 
-// Fetch student details
+// Fetch student details including average grade
 $student_id = $_SESSION['student_id'];
-$sql = "SELECT student_id, CONCAT(student_firstname, ' ', student_lastname) AS full_name, student_email, student_mobile
+$sql = "SELECT student_id, CONCAT(student_firstname, ' ', student_lastname) AS full_name, student_email, student_mobile, average_grade
         FROM students WHERE student_id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $student_result = $stmt->get_result()->fetch_assoc();
 
-// Fetch subjects and grades
+// Fetch subjects and grades for the student
 $grades_sql = "SELECT sub.name AS subject_name, g.grade
                FROM grades g
                INNER JOIN subjects sub ON g.subject_id = sub.subject_id
@@ -110,13 +110,17 @@ $stmt->close();
                                     <?php } ?>
                                 </tbody>
                             </table>
+
+                            <!-- Display Average Grade -->
+                            <div class="mt-3">
+                                <p><strong>Average Grade:</strong> <?php echo htmlspecialchars($student_result['average_grade']); ?></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

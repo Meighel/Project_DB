@@ -7,9 +7,9 @@ if (!isset($_GET['student_id'])) {
     die("No student specified.");
 }
 
-// Fetch student details
+// Fetch student details along with the average grade
 $student_id = $_GET['student_id'];
-$sql = "SELECT student_id, student_firstname, student_lastname, student_email, student_mobile
+$sql = "SELECT student_id, student_firstname, student_lastname, student_email, student_mobile, average_grade
         FROM students WHERE student_id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("s", $student_id);
@@ -49,7 +49,7 @@ $stmt->close();
 <div id="wrapper">
 
     <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column" style="padding: 2%;">
+    <div id="content-wrapper" class="d-flex flex-column" style="padding: 2%;"> 
 
         <!-- Main Content -->
         <div id="content">
@@ -110,6 +110,11 @@ $stmt->close();
                                 <?php } ?>
                             </tbody>
                         </table>
+
+                        <!-- Average Grade Display -->
+                        <div class="mt-3">
+                            <p><strong>Average Grade:</strong> <?php echo htmlspecialchars($student_result['average_grade']); ?></p>
+                        </div>
                     </div>
                 </div>
 
@@ -187,7 +192,6 @@ $stmt->close();
         </form>
     </div>
 </div>
-
 
 <!-- Include JS -->
 <script src="../vendor/jquery/jquery.min.js"></script>
