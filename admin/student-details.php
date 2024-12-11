@@ -113,7 +113,7 @@ $stmt->close();
 
                         <!-- Average Grade Display -->
                         <div class="mt-3">
-                            <p><strong>Average Grade:</strong> <?php echo htmlspecialchars($student_result['average_grade']); ?></p>
+                            <p><strong>General Weighted Average:</strong> <?php echo htmlspecialchars($student_result['average_grade']); ?></p>
                         </div>
                     </div>
                 </div>

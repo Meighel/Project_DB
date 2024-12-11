@@ -194,6 +194,9 @@
                     </div>
                 </div>
 
+                <!-- Include Top Students Table -->
+                <?php include 'admin/top_students.php'; ?>
+
 
                 <a href="dashboard-admin.html" class="btn btn-primary">Back to Dashboard</a>
             </div>
