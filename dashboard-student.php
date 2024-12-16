@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-// Check if the user is logged in
 if (!isset($_SESSION['student_id'])) {
-    header("Location: login-student.html"); // Redirect to login page if not logged in
+    header("Location: login-student.html");
     exit();
 }
 
 include __DIR__ . '/includes/webconnect.php';
 
-// Fetch student details including average grade
 $student_id = $_SESSION['student_id'];
 $sql = "SELECT student_id, CONCAT(student_firstname, ' ', student_lastname) AS full_name, student_email, student_mobile, average_grade
         FROM students WHERE student_id = ?";
@@ -18,7 +16,6 @@ $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $student_result = $stmt->get_result()->fetch_assoc();
 
-// Fetch subjects and grades for the student
 $grades_sql = "SELECT sub.name AS subject_name, g.grade
                FROM grades g
                INNER JOIN subjects sub ON g.subject_id = sub.subject_id

@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../includes/webconnect.php'; // Include your database connection file
+include __DIR__ . '/../includes/webconnect.php';
 
 // Fetch students
 $studentsQuery = "SELECT s.student_id, s.student_firstname, s.student_lastname, s.student_email, s.student_mobile,

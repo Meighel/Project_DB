@@ -1,5 +1,4 @@
 <?php
-// Include the database connection
 include __DIR__ . '/../includes/webconnect.php';
 
 // Fetch top students for each subject

@@ -2,12 +2,10 @@
 session_start();
 include __DIR__ . '/../includes/webconnect.php';
 
-// Check if student_id is passed in the URL
 if (!isset($_GET['student_id'])) {
     die("No student specified.");
 }
 
-// Fetch student details along with the average grade
 $student_id = $_GET['student_id'];
 $sql = "SELECT student_id, student_firstname, student_lastname, student_email, student_mobile, average_grade
         FROM students WHERE student_id = ?";
@@ -22,7 +20,6 @@ if (!$student_result) {
 
 $stmt->close();
 
-// Fetch subjects and grades for the student
 $grades_sql = "SELECT g.grades_id, sub.name AS subject_name, g.grade
                FROM grades g
                INNER JOIN subjects sub ON g.subject_id = sub.subject_id

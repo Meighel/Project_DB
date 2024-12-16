@@ -203,7 +203,7 @@
     <script>
         // Populate the edit modal with the selected student's data
         $('#editStudentModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
+            var button = $(event.relatedTarget); 
             var studentId = button.data('id');
             var firstname = button.data('firstname');
             var lastname = button.data('lastname');

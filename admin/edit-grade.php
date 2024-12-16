@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $grade = $_POST['grade'];
     $subject_id = $_POST['subject_id'];
 
-    // Check if the grade and grades_id are not empty
     if (!empty($grades_id) && !empty($grade)) {
         $query = "UPDATE grades SET grade = ? WHERE grades_id = ?";
         $stmt = $con->prepare($query);

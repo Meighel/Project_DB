@@ -2,12 +2,10 @@
 session_start();
 include __DIR__ . '/includes/webconnect.php';
 
-// Check if a subject_id is passed in the URL
 if (!isset($_GET['subject_id'])) {
     die("No subject specified.");
 }
 
-// Fetch the subject details
 $subject_id = $_GET['subject_id'];
 $subjectQuery = "SELECT name, description FROM subjects WHERE subject_id = ?";
 $stmt = $con->prepare($subjectQuery);
@@ -16,7 +14,6 @@ $stmt->execute();
 $subjectResult = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-// Fetch students enrolled in the subject along with their grades
 $studentsQuery = "
     SELECT g.grades_id, s.student_id, s.student_firstname, s.student_lastname, g.grade
     FROM students s

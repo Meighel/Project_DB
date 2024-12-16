@@ -1,15 +1,12 @@
 <?php
-include __DIR__ . '/includes/webconnect.php'; // Include database connection
+include __DIR__ . '/includes/webconnect.php';
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student_id = $_POST['student_id']; // Selected student ID
-    $subject_id = $_POST['subject_id']; // Selected subject ID
-    $grade = $_POST['grade']; // Input grade (decimal)
+    $student_id = $_POST['student_id'];
+    $subject_id = $_POST['subject_id'];
+    $grade = $_POST['grade'];
 
-    // Ensure all fields are filled
     if (!empty($student_id) && !empty($subject_id) && !empty($grade)) {
-        // Check if this student is already registered for this subject
         $checkQuery = "SELECT * FROM grades WHERE student_id = ? AND subject_id = ?";
         $stmt = $con->prepare($checkQuery);
         $stmt->bind_param("si", $student_id, $subject_id);
@@ -19,10 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             echo "<p style='color: red;'>This student is already registered for the selected subject.</p>";
         } else {
-            // Insert the grade into the grades table
             $insertQuery = "INSERT INTO grades (student_id, subject_id, grade) VALUES (?, ?, ?)";
             $stmt = $con->prepare($insertQuery);
-            $stmt->bind_param("sid", $student_id, $subject_id, $grade); // 'd' for decimal grade
+            $stmt->bind_param("sid", $student_id, $subject_id, $grade);
 
             if ($stmt->execute()) {
                 header("Location: manage-records.php");
@@ -37,11 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch all students for the dropdown
 $studentsQuery = "SELECT student_id, student_firstname, student_lastname FROM students";
 $studentsResult = mysqli_query($con, $studentsQuery);
 
-// Fetch all subjects for the dropdown
 $subjectsQuery = "SELECT subject_id, name FROM subjects";
 $subjectsResult = mysqli_query($con, $subjectsQuery);
 

@@ -1,7 +1,6 @@
 <?php
-include __DIR__ . '/../includes/webconnect.php'; // Include database connection
+include __DIR__ . '/../includes/webconnect.php';
 
-// Fetch all grades along with student and subject details
 $query = "
     SELECT 
         g.grades_id,
@@ -18,7 +17,6 @@ if (!$result) {
     die("Error fetching grades: " . mysqli_error($con));
 }
 
-// Output rows for the grades table
 while ($row = mysqli_fetch_assoc($result)) {
     echo '<tr>
             <td>' . htmlspecialchars($row['grades_id']) . '</td>
